@@ -1,19 +1,9 @@
 import interceptor.StatisticsInterceptor
 import kotlin.test.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class TestBlocks {
-    @Test
-    fun testNestedBlocksConstructions() {
-        blocks {
-            block {
-                blocks {
-
-                }
-            }
-        }
-    }
-
     @Test
     fun simpleBlockTest() {
         val statisticsInterceptor = StatisticsInterceptor()
@@ -29,5 +19,17 @@ class TestBlocks {
             assertTrue(result % 2 == 0)
         }
         println(statisticsInterceptor.getStatistics())
+    }
+
+    @Test
+    fun testCustomChanceBlocks() {
+        var result = 1
+        blocks {
+            chance(1.0) { result *= 2 }
+            chance(0.5) { result *= 3 }
+            chance(0.0) { result *= 5 }
+        }
+        assertTrue(result % 2 == 0)
+        assertFalse(result % 5 == 0)
     }
 }
