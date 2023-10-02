@@ -3,6 +3,10 @@ import interceptor.Interceptor
 open class BlockSequence(val blocks: MutableList<Block> = mutableListOf()) {
     private val interceptors = mutableListOf<Interceptor>()
 
+    fun chance(chance: Double, configuration: () -> Unit) {
+        blocks.add(Block(configuration, chance))
+    }
+
     fun block(configuration: () -> Unit) {
         blocks.add(Block(configuration))
     }
